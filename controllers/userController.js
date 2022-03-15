@@ -153,3 +153,75 @@ exports.verifyToken = async(req, res) => {
     }
 
 }
+
+
+exports.editUser = async (req, res) => {
+
+    const { id } = req.params;
+
+    const { 
+		name,
+		nickname,
+	} = req.body
+
+    try {
+
+        const updateUser = await User.findByIdAndUpdate(
+            id,
+            {
+                name,
+                nickname,
+            },
+            {new: true}
+            
+        )
+
+        res.json({
+            msg: "User actualizado con exito",
+            data: updateUser
+        })
+
+    } catch (error) {
+
+        res.status(500).json({
+			msg: "Hubo un error con la actualización de la User.",
+			error: error
+		})
+    }
+
+
+
+
+
+
+
+}
+
+
+exports.delete = async (req, res) => {
+
+    const { id } = req.params
+
+    try {
+
+        const deletedUser = await User.findByIdAndRemove({_id: id})
+
+        res.json({
+            msg: "User deleted succesfully",
+            data: deletedUser
+        })
+
+        
+    } catch (error) {
+        
+        res.status(500).json({
+			msg: "Hubo un error borrando el User.",
+			error: error
+		})
+
+    }
+
+
+
+
+}

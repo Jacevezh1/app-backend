@@ -13,6 +13,10 @@ router.post('/create', userController.create)
 
 router.post("/login", userController.login)
 
+router.put('/edit/:id', userController.editUser)
+
+router.delete('/delete/:id', userController.delete)
+
 router.get("/verifytoken", authorization, userController.verifyToken)
 
 
