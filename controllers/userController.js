@@ -1,9 +1,10 @@
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { off } = require('./../models/User');
 const User = require('./../models/User')
 
 
-// 1. Crear Usuario
+
 
 exports.create = async (req, res) => {
 
@@ -61,4 +62,94 @@ exports.create = async (req, res) => {
 			error: error
 		})
     }
+}
+
+
+exports.login = async (req, res) => {
+
+    const { email, password } = req.body;
+
+    try {
+
+        // Found user
+        const foundUser = await User.findOne({ email })
+
+        // Validacion de usuario
+        if(!foundUser) {
+            return res.status(400).json({
+                msg: "Usuario o la contraseña son incorrectos"
+            })
+        }
+
+        // If macthes a user, now evaluates password
+        const verifiedPass = await bcryptjs.compare(password, foundUser.password)
+
+        if(!verifiedPass) {
+            return await res.status(400).json({
+                msg: "Usuario o la contraseña son incorrectos"
+            })
+        }
+
+        const payload = {
+            user: {
+                id: foundUser.id
+            }
+        }
+
+        jwt.sign(
+            payload,
+            process.env.SECRET,
+            {
+                expiresIn: 360000
+            },
+            (error, token) => {
+                if(error) throw error;
+
+                res.json({
+                    msg: "Inicio de sesion exitoso",
+                    data: token
+                })
+            }
+        )
+
+        return
+        
+    } catch (error) {
+        
+        console.log(error)
+		res.status(500).json({
+			msg: "Hubo un problema con la autenticación.",
+			data: error
+		})
+
+    }
+
+
+
+
+
+}
+
+// CUANDO ESTAMOS ACCEDIENDO A DIFERENTES RUTAS  PREGUNTAR SI EL USUARIO TIENE PERMISOS O NO. ENTONCES, PARA CONFIRMARLO, SE LE PIDE SU TOKEN.
+exports.verifyToken = async(req, res) => {
+
+    
+    try {
+
+        // Find the ID of User (Token open) in DB
+        const foundUser = await User.findById(req.user.id).select("-password");
+
+        return res.json({
+            msg: "Datos de usuario encontrado",
+            data: foundUser
+        })
+        
+    } catch (error) {
+
+        res.status(500).json({
+            msg: "Hubo un error con el usuario"
+        })
+        
+    }
+
 }

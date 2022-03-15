@@ -9,11 +9,11 @@ const authorization = require('./../middlewares/authorization')
 
 // 2. Rutas
 
-router.use('/create', userController.create)
+router.post('/create', userController.create)
 
+router.post("/login", userController.login)
 
-
-
+router.get("/verifytoken", authorization, userController.verifyToken)
 
 
 // 3. Exportacion
