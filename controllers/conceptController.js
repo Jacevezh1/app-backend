@@ -91,7 +91,6 @@ exports.readOne = async (req, res) => {
     }
 }
 
-
 exports.edit = async (req, res) => {
 
     const { id } = req.params;

@@ -10,7 +10,8 @@ exports.create = async (req, res) => {
         image,
         description,
         body,
-        comments
+        comments,
+        date
     } = req.body;
 
 
@@ -23,7 +24,8 @@ exports.create = async (req, res) => {
             image,
             description,
             body,
-            comments
+            comments,
+            date
         });
 
         // Respuesta en JSON

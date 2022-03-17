@@ -10,6 +10,10 @@ const postSchema = mongoose.Schema({
         type: String, 
         required: true
     },
+    type: {
+        type: String, 
+        required: true
+    },
     image: {
 		type: String,
 		required: true
@@ -19,12 +23,13 @@ const postSchema = mongoose.Schema({
 		default: true
 	},
     body: {
-        type: String, 
+        type: Array, 
         required: true
     },
     comments: {
         type: Array
     },
+    date: { type: Date, default: Date.now },
 
 })
 
