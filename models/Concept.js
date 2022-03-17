@@ -19,7 +19,7 @@ const ConceptSchema = mongoose.Schema({
 		default: true
 	},
     body: {
-        type: String, 
+        type: Array, 
         required: true
     },
     comments: {
