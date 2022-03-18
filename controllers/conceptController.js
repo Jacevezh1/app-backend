@@ -1,6 +1,6 @@
 const Concept = require('./../models/Concept')
 
-
+ 
 
 
 exports.create = async (req, res) => {
@@ -47,7 +47,6 @@ exports.create = async (req, res) => {
 
 }
 
-
 exports.readAll = async (req, res) => {
 
     try {
@@ -66,7 +65,6 @@ exports.readAll = async (req, res) => {
         })
     }
 }
-
 
 exports.readOne = async (req, res) => {
 

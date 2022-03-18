@@ -25,6 +25,12 @@ const postSchema = mongoose.Schema({
         type: String, 
         required: true
     },
+    reading: {
+        type: String, 
+    },
+    ownerlogo: {
+        type: String,
+    },
     comments: {
         type: Array
     },
